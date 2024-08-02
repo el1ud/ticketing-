@@ -28,3 +28,11 @@ class Concert(db.Model):
     image_url = db.Column(db.String(255), nullable=True)  # Field for image URL
     tickets = db.relationship('Ticket', backref='concert', lazy=True)
     attendees = db.relationship('ConcertUser', back_populates='concert')
+
+# Ticket Model
+class Ticket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    seat_number = db.Column(db.String(10), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    concert_id = db.Column(db.Integer, db.ForeignKey('concert.id'), nullable=False)
