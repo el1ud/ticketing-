@@ -36,3 +36,12 @@ class Ticket(db.Model):
     price = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     concert_id = db.Column(db.Integer, db.ForeignKey('concert.id'), nullable=False)
+
+# Association Table for Many-to-Many Relationship
+class ConcertUser(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    concert_id = db.Column(db.Integer, db.ForeignKey('concert.id'), nullable=False)
+    user_rating = db.Column(db.Float, nullable=True)
+    user = db.relationship('User', back_populates='concerts')
+    concert = db.relationship('Concert', back_populates='attendees')
