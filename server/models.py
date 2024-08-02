@@ -19,3 +19,12 @@ class User(db.Model):
     def check_password(self, password):
         return checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
 
+# Concert Model with Image
+class Concert(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    venue = db.Column(db.String(120), nullable=False)
+    image_url = db.Column(db.String(255), nullable=True)  # Field for image URL
+    tickets = db.relationship('Ticket', backref='concert', lazy=True)
+    attendees = db.relationship('ConcertUser', back_populates='concert')
